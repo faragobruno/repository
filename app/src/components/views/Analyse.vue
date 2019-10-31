@@ -9,14 +9,24 @@
       <li>Number of adults: {{getAdults.length}}</li>
       <li>Number of elders: {{getElders.length}}</li>
       </ul>
-    <b-progress :value="value" :max="max" show-progress animated></b-progress>
-    <b-progress class="mt-2" :max="max" show-value>
-      <b-progress-bar :value="value * (6 / 10)" variant="success"></b-progress-bar>
-      <b-progress-bar :value="value * (2.5 / 10)" variant="warning"></b-progress-bar>
-      <b-progress-bar :value="value * (1.5 / 10)" variant="danger"></b-progress-bar>
+    <b-progress :max="max" class="mt-2" show-progress animated variant="success">
+      <b-progress-bar :value="menvalue" :label="`${((menvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
     </b-progress>
-
-    <b-button class="mt-3" @click="randomValue">Click me</b-button>
+    <b-progress :max="max" class="mt-2" show-progress animated variant="success">
+      <b-progress-bar :value="womenvalue" :label="`${((womenvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
+    </b-progress>
+    <b-progress :max="max" class="mt-2" show-progress animated variant="primary">
+      <b-progress-bar :value="activevalue" :label="`${((activevalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
+    </b-progress>
+    <b-progress :max="max" class="mt-2" show-progress animated variant="danger">
+      <b-progress-bar :value="nonactivevalue" :label="`${((nonactivevalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
+    </b-progress>
+    <b-progress :max="max" class="mt-2" show-progress animated variant="info">
+      <b-progress-bar :value="adultvalue" :label="`${((adultvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
+    </b-progress>
+    <b-progress :max="max" class="mt-2" show-progress animated variant="warning">
+      <b-progress-bar :value="eldervalue" :label="`${((eldervalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
+    </b-progress>
   </div>
 </template>
 
@@ -32,14 +42,17 @@ export default {
   },
     data() {
       return {
-        value: 45,
-        max: 100
+        value:4,
+        menvalue: this.$store.getters.getMenLength.length,
+        womenvalue: this.$store.getters.getWomenLength.length,
+        activevalue: this.$store.getters.getActivePeople.length,
+        nonactivevalue: this.$store.getters.getNonActivePeople.length,
+        adultvalue: this.$store.getters.getAdults.length,
+        eldervalue: this.$store.getters.getElders.length,
+        max: this.$store.getters.getMaxPeople 
       }
     },
     methods: {
-      randomValue() {
-        this.value = Math.random() * this.max
-      }
     }
 }
 </script>

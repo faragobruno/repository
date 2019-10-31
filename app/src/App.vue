@@ -4,7 +4,7 @@
       <Header/>
       <router-link to="/">Home</router-link> |
       <router-link to="/datas">Datas</router-link> |
-      <router-link to="/analyse">Analyse</router-link>
+      <router-link to="/analyse">Analytics</router-link>
     </div>
     <b-container>
       <router-view/>
