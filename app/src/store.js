@@ -28,17 +28,35 @@ export const store = new Vuex.Store({
             {id: 10, isActive: false, age: 66, name: 'Lemas Nvas', email: 'Nvas@gmail.com', gender: 'male' },
             {id: 11, isActive: true, age: 54, name: 'Kenfe Hajs', email: 'Hajs@yahoo.co.uk', gender: 'female' },
             {id: 12, isActive: true, age: 24, name: 'Uhsa Nmeas', email: 'Nmeas@gmail.com', gender: 'male' }
+        ],
+        profFields: [
+            { key: 'id',sortable:true},
+            { key: 'name',sortable:true},
+            { key: 'amount',sortable:true}
+        ],
+        profItems:[
+            { id: 1, name: 'Carpenter', amount: 4},
+            { id: 2, name: 'Businessmen', amount: 2},
+            { id: 3, name: 'Translator', amount: 2},
+            { id: 4, name: 'Footballer', amount: 3},
+            { id: 5, name: 'Mechanic', amount: 1}
         ]
     },
     mutations: {
         add_person(state, item) {
             state.items.push(item);
         },
+        add_prof(state,profession){
+            state.profItems.push(profession);
+        }
     },
     actions: {
         createAddition({ commit },item) {
             commit('add_person',item);
           },
+        createProfessions({commit},profession) {
+            commit('add_prof',profession);
+        }
     },
     getters: {
         getMaxPeople: state => {

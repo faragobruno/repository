@@ -102,21 +102,26 @@ export default {
     },
     onRowSelected(items) {
         this.selected = items
+        this.index = items[0].id
+        console.log(items[0].id)
     },
     showModal() {
       this.$refs["my-modal"].show();
     },
     deleteRow(){
-      let index = this.items.indexOf(this.selected);
-      console.log(this.selected)
-      console.log(index)
-      this.items.splice(index, 1);
+      for(let i=0;i<this.items.length;i++){
+        console.log(this.items[i].id)
+        if(this.items[i].id === this.index){
+          this.items.splice(i,1)
+        }
+      } 
     },
     onSubmit() {
       var idx = this.items.length
       idx = idx + 1
       this.form.id = idx
       this.createAddition(this.form)
+      this.$refs["my-modal"].hide()
       this.form = {
         name: "",
         gender: "",
@@ -152,6 +157,7 @@ export default {
       sortBy: "id",
       sortDesc: false,
       show: true,
+      index:0,
       selected: []
     };
   }

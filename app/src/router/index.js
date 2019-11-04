@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from '../components/views/Home.vue'
 import Datas from '../components/views/Datas'
 import Analyse from '../components/views/Analyse'
+import Professions from '../components/views/Professions'
+import LoginComponent from "../components/views/Login.vue"
 
 Vue.use(Router)
 
@@ -12,6 +14,17 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: {
+        name: "login"
+      }
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: LoginComponent
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Home
     },
@@ -19,6 +32,11 @@ export default new Router({
       path: '/datas',
       name: 'datas',
       component: Datas
+    },
+    {
+      path: '/professions',
+      name: 'professions',
+      component: Professions
     },
     {
       path: '/analyse',
