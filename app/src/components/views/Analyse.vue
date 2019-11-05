@@ -9,22 +9,22 @@
       <li>Number of adults: {{getAdults.length}}</li>
       <li>Number of elders: {{getElders.length}}</li>
       </ul>
-    <b-progress :max="max" class="mt-2" show-progress animated variant="success">
+    <b-progress :max="max" class="mt-2"  variant="success">
       <b-progress-bar :value="menvalue" :label="`${((menvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
     </b-progress>
-    <b-progress :max="max" class="mt-2" show-progress animated variant="success">
+    <b-progress :max="max" class="mt-2" variant="success">
       <b-progress-bar :value="womenvalue" :label="`${((womenvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
     </b-progress>
-    <b-progress :max="max" class="mt-2" show-progress animated variant="primary">
+    <b-progress :max="max" class="mt-2"  variant="primary">
       <b-progress-bar :value="activevalue" :label="`${((activevalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
     </b-progress>
-    <b-progress :max="max" class="mt-2" show-progress animated variant="danger">
+    <b-progress :max="max" class="mt-2"  variant="danger">
       <b-progress-bar :value="nonactivevalue" :label="`${((nonactivevalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
     </b-progress>
-    <b-progress :max="max" class="mt-2" show-progress animated variant="info">
+    <b-progress :max="max" class="mt-2"  variant="info">
       <b-progress-bar :value="adultvalue" :label="`${((adultvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
     </b-progress>
-    <b-progress :max="max" class="mt-2" show-progress animated variant="warning">
+    <b-progress :max="max" class="mt-2"  variant="warning">
       <b-progress-bar :value="eldervalue" :label="`${((eldervalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
     </b-progress>
   </div>
@@ -64,6 +64,7 @@ export default {
 }
 .list-view{
     text-align: left;
+    margin-left: 15px;
 }
 
 </style>

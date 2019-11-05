@@ -2,7 +2,7 @@
   <div id="login">
     <h1>Login</h1>
     <input class = "username" type="text" name="username" v-model="input.username" placeholder="Username" />
-    <input type="password" name="password" v-model="input.password" placeholder="Password" />
+    <input class = "password" type="password" name="password" v-model="input.password" placeholder="Password" />
     <b-button class = "btn" variant="primary" v-on:click="login('b-toaster-top-center')">Login</b-button>
   </div>
 </template>
@@ -59,5 +59,10 @@ export default {
 }
 .username{
     margin-right: 10px;
+    border: 1px solid #cccccc;
+}
+.password{
+    margin-right: 10px;
+    border: 1px solid #cccccc;
 }
 </style>
