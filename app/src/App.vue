@@ -5,6 +5,7 @@
       <router-link to="/home">Home</router-link> |
       <router-link to="/datas">Datas</router-link> |
       <router-link to="/professions">Professions</router-link> |
+      <router-link to="/calendar">Calendar</router-link> |
       <router-link to="/analyse">Analytics</router-link> |
       <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
     </div>

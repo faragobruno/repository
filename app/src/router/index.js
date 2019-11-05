@@ -4,6 +4,7 @@ import Home from '../components/views/Home.vue'
 import Datas from '../components/views/Datas'
 import Analyse from '../components/views/Analyse'
 import Professions from '../components/views/Professions'
+import Calendar from '../components/views/Calendar'
 import LoginComponent from "../components/views/Login.vue"
 
 Vue.use(Router)
@@ -37,6 +38,11 @@ export default new Router({
       path: '/professions',
       name: 'professions',
       component: Professions
+    },
+    {
+      path: '/calendar',
+      name: 'calendar',
+      component: Calendar
     },
     {
       path: '/analyse',
