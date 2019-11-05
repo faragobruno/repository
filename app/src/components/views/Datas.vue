@@ -10,7 +10,7 @@
       selected-variant="active"
       hover
       selectable
-      :items="items"
+      :items="events"
       :fields="fields"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
@@ -25,7 +25,7 @@
       </template>
     </b-table>
     <b-button id="show-btn" @click="showModal" class="success-btn" variant="success">Add</b-button>
-    <b-button @click="deleteRow" variant="danger">Delete</b-button>
+    <b-button @click="deleteRow(index)" variant="danger">Delete</b-button>
 
     <b-modal ref="my-modal" hide-footer title="Add a person to the database">
       <div class="d-block text-center">
@@ -82,16 +82,49 @@
 </template>
 
 <script>
-import { mapState,mapActions } from "vuex";
+import { mapState} from "vuex";
+import { db } from "@/main";
 export default {
   name: "Datas",
   computed: {
     ...mapState(["fields", "items"])
   },
+  mounted() {
+    this.getEvents();
+  },
   methods: {
-    ...mapActions([
-      'createAddition'
-    ]),
+    async getEvents() {
+      let snapshot = await db.collection("clientDatas").get();
+      let events = [];
+      snapshot.forEach(doc => {
+        let appData = doc.data();
+        appData.id = doc.id;
+        events.push(appData);
+      });
+      this.events = events;
+    },
+    async deleteRow(ev){
+      await db.collection('clientDatas').doc(ev).delete()
+      this.getEvents()
+    },
+    async onSubmit(){
+      if(this.form.name && this.form.age && this.form.gender && this.form.email){
+        await db.collection('clientDatas').add({
+          name: this.form.name,
+          age: this.form.age,
+          gender: this.form.gender,
+          email: this.form.email,
+          isActive: this.form.isActive
+        })
+        this.getEvents()
+        this.form.name=""
+        this.form.age=""
+        this.form.gender=""
+        this.form.email=""
+      }else{
+        alert('Name,age,email and gender are required.')
+      }
+    },
     toast(toaster, append = false) {
       this.$bvToast.toast(`Successful submit!`, {
         title: `Adding`,
@@ -103,32 +136,9 @@ export default {
     onRowSelected(items) {
         this.selected = items
         this.index = items[0].id
-        console.log(items[0].id)
     },
     showModal() {
       this.$refs["my-modal"].show();
-    },
-    deleteRow(){
-      for(let i=0;i<this.items.length;i++){
-        console.log(this.items[i].id)
-        if(this.items[i].id === this.index){
-          this.items.splice(i,1)
-        }
-      } 
-    },
-    onSubmit() {
-      var idx = this.items.length
-      idx = idx + 1
-      this.form.id = idx
-      this.createAddition(this.form)
-      this.$refs["my-modal"].hide()
-      this.form = {
-        name: "",
-        gender: "",
-        email: "",
-        age: null,
-        isActive: false
-      };
     },
     onReset() {
       this.form.name = "";
@@ -158,7 +168,9 @@ export default {
       sortDesc: false,
       show: true,
       index:0,
-      selected: []
+      selected: [],
+      selectedRow: {},
+      events:[]
     };
   }
 };

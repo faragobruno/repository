@@ -8,9 +8,10 @@
       :select-mode="selectMode"
       @click="showModal"
       selected-variant="active"
+      @row-selected="onRowSelected"
       hover
       selectable
-      :items="profItems"
+      :items="events"
       :fields="profFields"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
@@ -29,7 +30,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState} from "vuex";
+import { db } from "@/main";
 export default {
   name: "Professions",
   data(){
@@ -37,17 +39,41 @@ export default {
         selectMode: 'single',
         sortBy: "id",
         sortDesc: false,
+        events: [],
+        selected: []
       }
   },
   computed: {
     ...mapState(["profFields", "profItems"])
   },
+  mounted() {
+    this.getEvents();
+  },
   methods: {
-    ...mapActions(["createProfessions"]),
-    showModal() {
-        console.log(1)
-      this.$refs["my-modal"].show();
+    async getEvents() {
+      let snapshot = await db.collection("profDatas").get();
+      let events = [];
+      snapshot.forEach(doc => {
+        let appData = doc.data();
+        appData.id = doc.id;
+        events.push(appData);
+      });
+      this.events = events;
     },
+    async updateEvent(ev){
+      await db.collection('profDatas').doc(this.currentlyEditing).update({
+        name: ev.name,
+        amount: ev.amount
+      })
+      this.selectedOpen=false
+      this.currentlyEditing= null
+    },
+    onRowSelected(items) {
+        this.selected = items
+    },
+    showModal(){
+      this.$refs["my-modal"].show()
+    }
   }
 };
 </script>

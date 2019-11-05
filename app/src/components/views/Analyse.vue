@@ -1,13 +1,13 @@
 <template>
   <div class="analyse-view"> 
       <ul class="list-view">
-      <li> Max People: {{ getMaxPeople }}</li>
-      <li>Number of men: {{getMenLength.length}} </li>
-      <li>Number of women: {{getWomenLength.length}}</li>
-      <li>Number of active people: {{getActivePeople.length}}</li>
-      <li>Number of non-active people: {{getNonActivePeople.length}} </li>
-      <li>Number of adults: {{getAdults.length}}</li>
-      <li>Number of elders: {{getElders.length}}</li>
+      <li> Max People: {{max}}</li>
+      <li>Number of men: {{menvalue}} </li>
+      <li>Number of women: {{womenvalue}}</li>
+      <li>Number of active people: {{activevalue}}</li>
+      <li>Number of non-active people: {{nonactivevalue}} </li>
+      <li>Number of adults: {{adultvalue}}</li>
+      <li>Number of elders: {{eldervalue}}</li>
       </ul>
     <b-progress :max="max" class="mt-2"  variant="success">
       <b-progress-bar :value="menvalue" :label="`${((menvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
@@ -31,28 +31,56 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
+import { db } from "@/main";
 export default {
     name:"Analyse",
       computed: {
-    ...mapState(['fields', 'items']),
-    ...mapGetters(['getMaxPeople', 'getMenLength',
-    'getWomenLength','getActivePeople','getNonActivePeople',
-    'getAdults','getElders'])
+    ...mapState(['fields', 'items'])
   },
     data() {
       return {
         value:4,
-        menvalue: this.$store.getters.getMenLength.length,
-        womenvalue: this.$store.getters.getWomenLength.length,
-        activevalue: this.$store.getters.getActivePeople.length,
-        nonactivevalue: this.$store.getters.getNonActivePeople.length,
-        adultvalue: this.$store.getters.getAdults.length,
-        eldervalue: this.$store.getters.getElders.length,
-        max: this.$store.getters.getMaxPeople 
+        menvalue: 0,
+        womenvalue: 0,
+        activevalue: 0,
+        nonactivevalue: 0,
+        adultvalue: 0,
+        eldervalue: 0,
+        max: 0
       }
     },
+    mounted(){
+      this.getEvents();
+    },
     methods: {
+        async getEvents(){
+          let asd= 0
+          await db.collection("clientDatas").get().then(function(querySnapshot) {  
+              asd=querySnapshot.size
+          });
+          this.max=asd
+
+          let snapshot = await db.collection("clientDatas").get();
+          snapshot.forEach(doc => {
+          if(doc.data().gender === "male"){
+            this.menvalue++
+          }else{
+            this.womenvalue++
+          }
+          if(doc.data().isActive === true){
+            this.activevalue++
+          }else{
+            this.nonactivevalue++
+          }
+          if(doc.data().age < 55){
+            this.adultvalue++
+          }else{
+            this.eldervalue++
+          }
+          });
+        }
+      
     }
 }
 </script>

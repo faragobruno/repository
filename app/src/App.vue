@@ -26,10 +26,6 @@ export default {
   data() {
     return {
       authenticated: false,
-      mockAccount: {
-        username: "a",
-        password: "1"
-      }
     };
   },
   mounted() {
