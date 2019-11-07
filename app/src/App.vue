@@ -2,12 +2,12 @@
   <div id="app">
     <div id="nav" v-if="this.$route.path !== '/login'">
       <Header />
-      <router-link to="/home">Home</router-link> |
-      <router-link to="/datas">Datas</router-link> |
-      <router-link to="/professions">Professions</router-link> |
-      <router-link to="/calendar">Calendar</router-link> |
-      <router-link to="/analyse">Analytics</router-link> |
-      <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
+      <router-link to="/home"> Home |</router-link>
+      <router-link v-if="tabAuth" to="/datas"> Datas |</router-link>
+      <router-link v-if="tabAuth" to="/requests"> Requests |</router-link>
+      <router-link to="/calendar"> Calendar |</router-link>
+      <router-link v-if="tabAuth" to="/analyse"> Analytics |</router-link>
+      <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace> Logout</router-link>
     </div>
     <b-container>
       <router-view @authenticated="setAuthenticated" />
@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       authenticated: false,
+      tabAuth: false
     };
   },
   mounted() {

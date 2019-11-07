@@ -17,11 +17,13 @@ export const store = new Vuex.Store({
         ],
         items: [],
         profFields: [
-            { key: 'id',sortable:true},
-            { key: 'name',sortable:true},
-            { key: 'amount',sortable:true}
+            { key: 'name', sortable: true },
+            { key: 'details', sortable: true },
+            { key: 'start', sortable: true },
+            { key: 'end', sortable: true },
+            { key: 'isAllowed', sortable: true}
         ],
-        profItems:[]
+        profItems: []
     },
     mutations: {
 

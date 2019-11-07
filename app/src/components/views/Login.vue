@@ -55,6 +55,7 @@
 import { db } from "@/main";
 export default {
   name: "Login",
+  props: ['app'],
   data() {
     return {
       input: {
@@ -81,6 +82,7 @@ export default {
             doc.data().password === this.input.password
           ) {
             auth = true;
+            this.$parent.tabAuth = doc.data().auth
           }
         });
       }
@@ -113,7 +115,8 @@ export default {
       if (available) {
         await db.collection("login").add({
           username: this.form.username,
-          password: this.form.password
+          password: this.form.password,
+          auth: false
         });
         this.form.username = "";
         this.form.password = "";

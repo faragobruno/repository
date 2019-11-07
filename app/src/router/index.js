@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '../components/views/Home.vue'
 import Datas from '../components/views/Datas'
 import Analyse from '../components/views/Analyse'
-import Professions from '../components/views/Professions'
+import Requests from '../components/views/Requests'
 import Calendar from '../components/views/Calendar'
 import LoginComponent from "../components/views/Login.vue"
 
@@ -35,9 +35,9 @@ export default new Router({
       component: Datas
     },
     {
-      path: '/professions',
-      name: 'professions',
-      component: Professions
+      path: '/requests',
+      name: 'requests',
+      component: Requests
     },
     {
       path: '/calendar',
