@@ -86,7 +86,6 @@ export default {
     },
     onRowSelected(items) {
       this.selected = items;
-      console.log(this.selected);
     },
     showModal(items) {
       this.selected = items;

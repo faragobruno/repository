@@ -6,8 +6,9 @@
       <router-link v-if="tabAuth" to="/datas"> Datas |</router-link>
       <router-link v-if="tabAuth" to="/requests"> Requests |</router-link>
       <router-link to="/calendar"> Calendar |</router-link>
+      <router-link to="/creditdatas"> Credit |</router-link>
       <router-link v-if="tabAuth" to="/analyse"> Analytics |</router-link>
-      <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace> Logout</router-link>
+      <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace> Logout</router-link>   
     </div>
     <b-container>
       <router-view @authenticated="setAuthenticated" />
@@ -21,12 +22,14 @@ import Header from "./components/layout/Header";
 export default {
   name: "app",
   components: {
-    Header
+    Header,
   },
   data() {
     return {
       authenticated: false,
-      tabAuth: false
+      tabAuth: false,
+      user: "",
+      pass: ""
     };
   },
   mounted() {

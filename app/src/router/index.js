@@ -5,6 +5,7 @@ import Datas from '../components/views/Datas'
 import Analyse from '../components/views/Analyse'
 import Requests from '../components/views/Requests'
 import Calendar from '../components/views/Calendar'
+import Creditdatas from '../components/views/Creditdatas'
 import LoginComponent from "../components/views/Login.vue"
 
 Vue.use(Router)
@@ -43,6 +44,11 @@ export default new Router({
       path: '/calendar',
       name: 'calendar',
       component: Calendar
+    },
+    {
+      path: '/creditdatas',
+      name: 'creditdatas',
+      component: Creditdatas
     },
     {
       path: '/analyse',

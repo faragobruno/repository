@@ -1,20 +1,28 @@
 <template>
-  <div id="login">
+  <div id="login" >
     <h1>Login</h1>
-    <input
-      class="username"
-      type="text"
-      name="username"
-      v-model="input.username"
-      placeholder="Username"
-    />
-    <input
-      class="password"
-      type="password"
-      name="password"
-      v-model="input.password"
-      placeholder="Password"
-    />
+    <b-navbar  type="light" variant="light">
+      <b-nav-form class="d-flex justify-content-center">
+        <b-input-group  prepend="@">
+          <b-form-input
+            class="username"
+            type="text"
+            name="username"
+            v-model="input.username"
+            placeholder="Username"
+          ></b-form-input>
+        </b-input-group>
+        <b-input-group class="mt-2"  prepend="➤">
+          <b-form-input
+            class="password"
+            type="password"
+            name="password"
+            v-model="input.password"
+            placeholder="Password"
+          ></b-form-input>
+        </b-input-group>
+      </b-nav-form>
+    </b-navbar>
     <b-button class="log-btn" variant="success" v-on:click="login('b-toaster-top-center')">Login</b-button>
     <b-button class="reg-btn" variant="primary" @click="showModal">Register</b-button>
 
@@ -51,11 +59,13 @@
   </div>
 </template>
 
+
 <script>
+
 import { db } from "@/main";
 export default {
   name: "Login",
-  props: ['app'],
+  props: ["app"],
   data() {
     return {
       input: {
@@ -82,7 +92,9 @@ export default {
             doc.data().password === this.input.password
           ) {
             auth = true;
-            this.$parent.tabAuth = doc.data().auth
+            this.$parent.tabAuth = doc.data().auth;
+            (this.$parent.user = doc.data().username),
+              (this.$parent.pass = doc.data().password);
           }
         });
       }
@@ -99,7 +111,7 @@ export default {
         });
       }
     },
-    async onSubmit(toaster, append = false) { 
+    async onSubmit(toaster, append = false) {
       let snapshot = await db.collection("login").get();
       let available = true;
       snapshot.forEach(doc => {
@@ -173,7 +185,6 @@ export default {
   margin-right: 10px;
 }
 .username {
-  margin-right: 10px;
   border: 1px solid #cccccc;
 }
 .password {
