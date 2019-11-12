@@ -33,7 +33,7 @@
           @reset.prevent="onReset"
           v-if="show"
         >
-          <b-form-group id="input-group-1" label="Username: " label-for="input-1">
+          <b-form-group class="d-block text-left" id="input-group-1" label="Username: " label-for="input-1">
             <b-form-input
               id="input-1"
               v-model="form.username"
@@ -42,7 +42,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-2" label="Password: " label-for="input-2">
+          <b-form-group class="d-block text-left" id="input-group-2" label="Password: " label-for="input-2">
             <b-form-input
               id="input-2"
               v-model="form.password"

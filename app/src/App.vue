@@ -2,12 +2,12 @@
   <div id="app">
     <div id="nav" v-if="this.$route.path !== '/login'">
       <Header />
-      <router-link to="/home"> Home |</router-link>
-      <router-link v-if="tabAuth" to="/datas"> Datas |</router-link>
-      <router-link v-if="tabAuth" to="/requests"> Requests |</router-link>
-      <router-link to="/calendar"> Calendar |</router-link>
-      <router-link to="/creditdatas"> Credit |</router-link>
-      <router-link v-if="tabAuth" to="/analyse"> Analytics |</router-link>
+      <router-link to="/home"> Home </router-link><i>|</i>
+      <router-link v-if="tabAuth" to="/datas"> Datas </router-link><i v-if="tabAuth">|</i>
+      <router-link v-if="tabAuth" to="/requests"> Requests </router-link><i v-if="tabAuth">|</i>
+      <router-link to="/calendar"> Calendar </router-link><i>|</i>
+      <router-link to="/creditdatas"> Credit </router-link><i>|</i>
+      <router-link v-if="tabAuth" to="/analyse"> Analytics </router-link><i v-if="tabAuth">|</i>
       <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace> Logout</router-link>   
     </div>
     <b-container>
