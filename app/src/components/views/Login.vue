@@ -3,7 +3,7 @@
     <h1>Login</h1>
     <b-navbar  type="light" variant="light">
       <b-nav-form class="d-flex justify-content-center">
-        <b-input-group  prepend="@">
+        <a> <font-awesome-icon icon="user" /></a><b-input-group class="ml-3">
           <b-form-input
             class="username"
             type="text"
@@ -12,9 +12,9 @@
             placeholder="Username"
           ></b-form-input>
         </b-input-group>
-        <b-input-group class="mt-2"  prepend="➤">
-          <b-form-input
-            class="password"
+        <b-input-group class="mt-2" >
+          <a> <font-awesome-icon class="mt-2"  icon="key" /></a><b-form-input 
+            class="password ml-3"
             type="password"
             name="password"
             v-model="input.password"
@@ -37,6 +37,7 @@
             <b-form-input
               id="input-1"
               v-model="form.username"
+              type="email"
               required
               placeholder="Enter your username"
             ></b-form-input>
@@ -84,7 +85,7 @@ export default {
   methods: {
     async login(toaster, append = false) {
       let snapshot = await db.collection("login").get();
-      let auth = false;
+      let auth = "";
       if (this.input.username != "" && this.input.password != "") {
         snapshot.forEach(doc => {
           if (

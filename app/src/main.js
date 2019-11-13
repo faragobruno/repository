@@ -6,12 +6,15 @@ import { store } from './store'
 import VueTextareaAutosize from 'vue-textarea-autosize'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faArchive,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt ,faAlignLeft } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faUserSecret)
+library.add(faArchive,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt, faAlignLeft)
+
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-layers', FontAwesomeLayers)
+Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 
 
 import 'bootstrap/dist/css/bootstrap.css'

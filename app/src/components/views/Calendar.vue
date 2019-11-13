@@ -87,7 +87,7 @@
             >
               <v-card color="grey lighten-4" min-width="350px" flat>
                 <v-toolbar :color="selectedEvent.color" dark>
-                  <v-btn v-if="this.$parent.tabAuth" @click="deleteEvent(selectedEvent.id)" icon>
+                  <v-btn v-if="this.$parent.tabAuth != 2" @click="deleteEvent(selectedEvent.id)" icon>
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                   <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
@@ -105,7 +105,7 @@
                     ></textarea-autosize>
                   </form>
                 </v-card-text>
-                <v-card-actions v-if="this.$parent.tabAuth">
+                <v-card-actions v-if="this.$parent.tabAuth != 2">
                   <v-btn text color="secondary" @click="selectedOpen = false">Close</v-btn>
                   <v-btn
                     text
