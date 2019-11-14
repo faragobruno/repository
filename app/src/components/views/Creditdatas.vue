@@ -33,7 +33,7 @@
                 </template>
               </template>
             </b-table>
-            <b-modal scrollable  ref="my-modals" hide-footer title="Személyes adatok">
+            <b-modal :header-bg-variant="headerBgVariant" :header-text-variant="headerTextVariant" scrollable  ref="my-modals" hide-footer title="Személyes adatok">
               <div>
                 <b-form>
                   <b-form-group id="input-group-1" label="Adós nettó jövedelme (FT): " label-for="input-1">
@@ -476,6 +476,8 @@ export default {
         szuldatum: "",
         khr: ""
       },
+      headerBgVariant: 'dark',
+      headerTextVariant: 'light',
       selected: [],
       sortBy: "id",
       sortDesc: false,

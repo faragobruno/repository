@@ -8,12 +8,13 @@
       <i> <font-awesome-icon icon="calendar-alt" /></i><router-link to="/calendar"> Calendar </router-link><i>| </i>
       <i> <font-awesome-icon icon="dollar-sign"/></i><router-link to="/creditdatas"> Credit </router-link><i>| </i>
       <i v-if="tabAuth != 2"> <font-awesome-icon icon="chart-bar"/></i><router-link v-if="tabAuth != 2" to="/analyse"> Analytics </router-link><i v-if="tabAuth != 2">| </i>
-      <i v-if="tabAuth != 2"> <font-awesome-icon icon="user"/></i><router-link v-if="tabAuth != 2" to="/users"> Users </router-link><i v-if="tabAuth != 2">| </i>
-      <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace> Logout</router-link>   
+      <i v-if="tabAuth != 2"> <font-awesome-icon icon="user-circle"/></i><router-link v-if="tabAuth != 2" to="/users"> Users </router-link><i v-if="tabAuth != 2">| </i>
+      <router-link  v-if="authenticated" to="/login" v-on:click.native="logout()" replace><b-button variant="outline-danger" size="sm"> Logout </b-button> </router-link> 
     </div>
     <b-container>
       <router-view @authenticated="setAuthenticated" />
     </b-container>
+    
   </div>
 </template>
 

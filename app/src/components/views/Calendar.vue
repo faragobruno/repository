@@ -230,7 +230,6 @@ export default {
       this.currentlyEditing = null;
     },
     async deleteEvent(ev) {
-      console.log(ev);
       await db
         .collection("calEvent")
         .doc(ev)

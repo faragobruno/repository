@@ -26,7 +26,7 @@
     <b-button class="log-btn" variant="success" v-on:click="login('b-toaster-top-center')">Login</b-button>
     <b-button class="reg-btn" variant="primary" @click="showModal">Register</b-button>
 
-    <b-modal ref="modal" hide-footer title="Register a new account">
+    <b-modal :header-bg-variant="headerBgVariant" :header-text-variant="headerTextVariant" ref="modal" hide-footer title="Register a new account">
       <div class="d-block text-center">
         <b-form
           @submit.prevent="onSubmit('b-toaster-top-center')"
@@ -79,7 +79,9 @@ export default {
       },
       show: true,
       isSubmittable: true,
-      asd: true
+      asd: true,
+      headerBgVariant: 'dark',
+      headerTextVariant: 'light',
     };
   },
   methods: {
@@ -129,17 +131,19 @@ export default {
         await db.collection("login").add({
           username: this.form.username,
           password: this.form.password,
-          auth: false
+          auth: 2
         });
         this.form.username = "";
         this.form.password = "";
 
         this.$bvToast.toast(`Successful registration!`, {
           title: `Register`,
+          variant: "success",
           toaster: toaster,
           solid: true,
           appendToast: append
         });
+        this.hideModal();
       } else {
         this.$bvToast.toast(`This username is already in use!`, {
           title: `Register`,
@@ -162,6 +166,9 @@ export default {
       this.$refs["modal"].show();
       this.form.username = "";
       this.form.password = "";
+    },
+    hideModal() {
+      this.$refs["modal"].hide();
     }
   }
 };

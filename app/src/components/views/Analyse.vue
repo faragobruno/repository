@@ -190,7 +190,7 @@ export default {
         }
         if (doc.data().start > "2020-01-01" && doc.data().end < "2020-05-31") {
           this.firstHalf++;
-        } else {
+        } else if(doc.data().start > "2020-06-01" && doc.data().end < "2020-12-31"){
           this.secondHalf++;
         }
       });

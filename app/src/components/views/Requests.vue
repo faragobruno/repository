@@ -25,7 +25,7 @@
         </template>
       </template>
     </b-table>
-    <b-modal ref="my-modals" hide-footer title="Edit">
+    <b-modal :header-bg-variant="headerBgVariant" :header-text-variant="headerTextVariant" ref="my-modals" hide-footer title="Edit">
       <div>
         <b-form @submit.prevent="onSubmit(selected)">
           <b-form-group id="select-group-1" label="Accept request? " label-for="select-1">
@@ -55,6 +55,9 @@ export default {
         isAllowed: false
       },
       sortBy: "start",
+      headerBgVariant: 'dark',
+      headerTextVariant: 'light',
+      
     };
   },
   computed: {

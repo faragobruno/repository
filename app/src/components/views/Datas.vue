@@ -27,7 +27,7 @@
     <b-button id="show-btn" @click="showModal" class="success-btn" variant="success">Add</b-button>
     <b-button @click="deleteRow(index)" variant="danger">Delete</b-button>
 
-    <b-modal ref="my-modal" hide-footer title="Add a person to the database">
+    <b-modal :header-bg-variant="headerBgVariant" :header-text-variant="headerTextVariant" ref="my-modal" hide-footer title="Add a person to the database">
       <div class="d-block text-center">
         <b-form @submit.prevent="onSubmit" @reset.prevent="onReset" v-if="show">
           <b-form-group id="input-group-1" label="Last Name: " label-for="input-1">
@@ -170,7 +170,9 @@ export default {
       index:0,
       selected: [],
       selectedRow: {},
-      events:[]
+      events:[],
+      headerBgVariant: 'dark',
+      headerTextVariant: 'light',
     };
   }
 };
