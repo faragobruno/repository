@@ -8,9 +8,11 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faArchive,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt,faUserCircle,faEdit ,faAlignLeft,} from '@fortawesome/free-solid-svg-icons'
-
-library.add(faArchive,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt,faUserCircle,faEdit , faAlignLeft)
+import { faArchive,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt,faUserCircle,faEdit,faAlignLeft, faEye, faFileExcel,} from '@fortawesome/free-solid-svg-icons'
+import excel from 'vue-excel-export'
+ 
+Vue.use(excel)
+library.add(faArchive,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt,faUserCircle,faEdit ,faEye,faFileExcel, faAlignLeft)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)

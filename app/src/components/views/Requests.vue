@@ -1,5 +1,13 @@
 <template>
   <div class="table-view">
+    <b-row class="row-view">
+      <b-col>
+        <b-form-input class="input-row" v-model="search" size="sm" placeholder="Search name..."></b-form-input>
+      </b-col>
+      <b-col>
+        <b-button size="sm" @click="onSearch()" type="submit" variant="primary">Search</b-button>
+      </b-col>
+    </b-row>
     <b-table
       striped
       sticky-header
@@ -25,7 +33,17 @@
         </template>
       </template>
     </b-table>
-    <b-modal :header-bg-variant="headerBgVariant" :header-text-variant="headerTextVariant" ref="my-modals" hide-footer title="Edit">
+    <b-button variant="success" class="w-50">
+    <i><font-awesome-icon icon="file-excel" size="lg"/></i>
+    <export-excel :data="events" worksheet="Bookings" name="Bookings.xls"></export-excel>
+    </b-button>
+    <b-modal
+      :header-bg-variant="headerBgVariant"
+      :header-text-variant="headerTextVariant"
+      ref="my-modals"
+      hide-footer
+      title="Edit"
+    >
       <div>
         <b-form @submit.prevent="onSubmit(selected)">
           <b-form-group id="select-group-1" label="Accept request? " label-for="select-1">
@@ -46,6 +64,14 @@ export default {
   props: ["calendar"],
   data() {
     return {
+      json_meta: [
+        [
+          {
+            key: "charset",
+            value: "utf-8"
+          }
+        ]
+      ],
       selectMode: "single",
       sortDesc: false,
       events: [],
@@ -55,9 +81,9 @@ export default {
         isAllowed: false
       },
       sortBy: "start",
-      headerBgVariant: 'dark',
-      headerTextVariant: 'light',
-      
+      headerBgVariant: "dark",
+      headerTextVariant: "light",
+      search: ""
     };
   },
   computed: {
@@ -70,12 +96,30 @@ export default {
     async getEvents() {
       let snapshot = await db.collection("calEvent").get();
       let events = [];
+      let s = this.search;
       snapshot.forEach(doc => {
-        let appData = doc.data();
-        appData.id = doc.id;
-        events.push(appData);
+        if (s != "") {
+          if (
+            doc
+              .data()
+              .name.toLowerCase()
+              .includes(s.toLowerCase())
+          ) {
+            let appData = doc.data();
+            appData.id = doc.id;
+            events.push(appData);
+          }
+        } else {
+          let appData = doc.data();
+          appData.id = doc.id;
+          events.push(appData);
+        }
       });
+      this.search = "";
       this.events = events;
+    },
+    onSearch() {
+      this.getEvents();
     },
     async onSubmit(selected) {
       await db
@@ -96,8 +140,8 @@ export default {
         this.$refs["my-modals"].show();
       }
     },
-    hideModal(){
-        this.$refs["my-modals"].hide();
+    hideModal() {
+      this.$refs["my-modals"].hide();
     },
     toast(toaster, append = false) {
       this.$bvToast.toast(`Successful submit!`, {
@@ -116,5 +160,11 @@ export default {
 .table-view {
   width: 1000px;
   margin: auto;
+}
+.row-view {
+  width: 280px;
+}
+.input-row {
+  width: 150px;
 }
 </style>

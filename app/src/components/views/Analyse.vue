@@ -1,50 +1,9 @@
 <template>
   <div class="analyse-view">
+    <b-row>
+      <b-col>
+        <h2 class="h2">Bookings</h2>
     <ul class="list-view">
-      <li>Max People: {{max}}</li>
-      <li>
-        Number of men: {{menvalue}}
-        <b-progress :max="max" class="mt-2" variant="success">
-          <b-progress-bar :value="menvalue" :label="`${((menvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
-        </b-progress>
-      </li>
-      <li>
-        Number of women: {{womenvalue}}
-        <b-progress :max="max" class="mt-2" variant="success">
-          <b-progress-bar :value="womenvalue" :label="`${((womenvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
-        </b-progress>
-      </li>
-      <li>
-        Number of active people: {{activevalue}}
-        <b-progress :max="max" class="mt-2" variant="primary">
-          <b-progress-bar
-            :value="activevalue"
-            :label="`${((activevalue / max) * 100).toFixed(2)}%`"
-          ></b-progress-bar>
-        </b-progress>
-      </li>
-      <li>
-        Number of non-active people: {{nonactivevalue}}
-        <b-progress :max="max" class="mt-2" variant="danger">
-          <b-progress-bar
-            :value="nonactivevalue"
-            :label="`${((nonactivevalue / max) * 100).toFixed(2)}%`"
-          ></b-progress-bar>
-        </b-progress>
-      </li>
-      <li>
-        Number of adults: {{adultvalue}}
-        <b-progress :max="max" class="mt-2" variant="info">
-          <b-progress-bar :value="adultvalue" :label="`${((adultvalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
-        </b-progress>
-      </li>
-      <li>
-        Number of elders: {{eldervalue}}
-        <b-progress :max="max" class="mt-2" variant="warning">
-          <b-progress-bar :value="eldervalue" :label="`${((eldervalue / max) * 100).toFixed(2)}%`"></b-progress-bar>
-        </b-progress>
-      </li>
-      <h1></h1>
       <li>
         Number of bookings/goal: {{calMax}}/{{month}}
         <b-progress :max="month" class="mt-2" variant="success">
@@ -97,6 +56,31 @@
         </b-progress>
       </li>
     </ul>
+    </b-col>
+    <b-col>
+      <h2 class="h2">Driving</h2>
+      <ul class="list-view">
+        <li>
+        Number of driving lessons taken: {{eddigiVezetesSzam}}/{{vezetesMax}}
+        <b-progress :max="vezetesMax" class="mt-2" variant="success">
+          <b-progress-bar :value="eddigiVezetesSzam" :label="`${((eddigiVezetesSzam / vezetesMax) * 100).toFixed(2)}%`"></b-progress-bar>
+        </b-progress>
+      </li>
+      <li>
+        Number of hours driven: {{eddigiVezetesOra}}/{{vezetesMaxOra}}
+        <b-progress :max="vezetesMaxOra" class="mt-2" variant="primary">
+          <b-progress-bar
+            :value="eddigiVezetesOra"
+            :label="`${((eddigiVezetesOra / vezetesMaxOra) * 100).toFixed(2)}%`"
+          ></b-progress-bar>
+        </b-progress>
+      </li>
+      <li class="mt-2">
+        Remaining driving lessons: {{remaining}}
+      </li>
+    </ul>
+    </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -110,13 +94,7 @@ export default {
   },
   data() {
     return {
-      menvalue: 0,
-      womenvalue: 0,
-      activevalue: 0,
-      nonactivevalue: 0,
-      adultvalue: 0,
-      eldervalue: 0,
-      max: 0,
+      today: new Date().toISOString().substr(0, 10),
 
       calMax: 0,
       month: 30,
@@ -125,7 +103,13 @@ export default {
       thirdQuar: 0,
       fourthQuart: 0,
       firstHalf: 0,
-      secondHalf: 0
+      secondHalf: 0,
+
+      vezetesMax: 20,
+      vezetesMaxOra: 40,
+      eddigiVezetesOra: 14,
+      eddigiVezetesSzam: 7,
+      remaining:0,
     };
   },
   mounted() {
@@ -133,33 +117,6 @@ export default {
   },
   methods: {
     async getEvents() {
-      let asd = 0;
-      await db
-        .collection("clientDatas")
-        .get()
-        .then(function(querySnapshot) {
-          asd = querySnapshot.size;
-        });
-      this.max = asd;
-      let snapshot = await db.collection("clientDatas").get();
-      snapshot.forEach(doc => {
-        if (doc.data().gender === "male") {
-          this.menvalue++;
-        } else {
-          this.womenvalue++;
-        }
-        if (doc.data().isActive === true) {
-          this.activevalue++;
-        } else {
-          this.nonactivevalue++;
-        }
-        if (doc.data().age < 55) {
-          this.adultvalue++;
-        } else {
-          this.eldervalue++;
-        }
-      });
-
       let cal = 0;
       await db
         .collection("calEvent")
@@ -170,6 +127,14 @@ export default {
       this.calMax = cal;
       let calsnapshot = await db.collection("calEvent").get();
       calsnapshot.forEach(doc => {
+        if(doc.data().name == "VEZETÉS"){
+          if(doc.data().start>this.today){
+            this.remaining++
+          }else{
+          this.eddigiVezetesOra= this.eddigiVezetesOra+2
+          this.eddigiVezetesSzam++;
+          }
+        }
         if (doc.data().start > "2020-01-01" && doc.data().end < "2020-03-31") {
           this.firstQuar++;
         } else if (
@@ -207,5 +172,9 @@ export default {
 .list-view {
   text-align: left;
   margin-left: 15px;
+}
+.h2{
+  text-align: left;
+
 }
 </style>

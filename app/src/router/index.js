@@ -7,6 +7,7 @@ import Requests from '../components/views/Requests'
 import Calendar from '../components/views/Calendar'
 import Creditdatas from '../components/views/Creditdatas'
 import Users from '../components/views/Users'
+import Profile from '../components/views/Profile'
 import LoginComponent from "../components/views/Login.vue"
 
 Vue.use(Router)
@@ -60,6 +61,11 @@ export default new Router({
       path: '/users',
       name: 'users',
       component: Users
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     }
   ]
 })

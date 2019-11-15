@@ -1,9 +1,12 @@
 <template>
-  <div id="login" >
+  <div id="login">
     <h1>Login</h1>
-    <b-navbar  type="light" variant="light">
+    <b-navbar type="light" variant="light">
       <b-nav-form class="d-flex justify-content-center">
-        <a> <font-awesome-icon icon="user" /></a><b-input-group class="ml-3">
+        <a>
+          <font-awesome-icon icon="user" />
+        </a>
+        <b-input-group class="ml-3">
           <b-form-input
             class="username"
             type="text"
@@ -12,8 +15,11 @@
             placeholder="Username"
           ></b-form-input>
         </b-input-group>
-        <b-input-group class="mt-2" >
-          <a> <font-awesome-icon class="mt-2"  icon="key" /></a><b-form-input 
+        <b-input-group class="mt-2">
+          <a>
+            <font-awesome-icon class="mt-2" icon="key" />
+          </a>
+          <b-form-input
             class="password ml-3"
             type="password"
             name="password"
@@ -26,14 +32,25 @@
     <b-button class="log-btn" variant="success" v-on:click="login('b-toaster-top-center')">Login</b-button>
     <b-button class="reg-btn" variant="primary" @click="showModal">Register</b-button>
 
-    <b-modal :header-bg-variant="headerBgVariant" :header-text-variant="headerTextVariant" ref="modal" hide-footer title="Register a new account">
+    <b-modal
+      :header-bg-variant="headerBgVariant"
+      :header-text-variant="headerTextVariant"
+      ref="modal"
+      hide-footer
+      title="Register a new account"
+    >
       <div class="d-block text-center">
         <b-form
           @submit.prevent="onSubmit('b-toaster-top-center')"
           @reset.prevent="onReset"
           v-if="show"
         >
-          <b-form-group class="d-block text-left" id="input-group-1" label="Username: " label-for="input-1">
+          <b-form-group
+            class="d-block text-left"
+            id="input-group-1"
+            label="Username: "
+            label-for="input-1"
+          >
             <b-form-input
               id="input-1"
               v-model="form.username"
@@ -43,7 +60,12 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group class="d-block text-left" id="input-group-2" label="Password: " label-for="input-2">
+          <b-form-group
+            class="d-block text-left"
+            id="input-group-2"
+            label="Password: "
+            label-for="input-2"
+          >
             <b-form-input
               id="input-2"
               v-model="form.password"
@@ -52,6 +74,46 @@
               placeholder="Enter your password"
             ></b-form-input>
           </b-form-group>
+
+          <b-form-group
+            class="d-block text-left"
+            id="input-group-3"
+            label="Born in: "
+            label-for="input-3"
+          >
+            <b-form-input
+              id="input-3"
+              v-model="form.birth"
+              type="text"
+              required
+              placeholder="Enter your birthday"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            class="d-block text-left"
+            id="input-group-4"
+            label="Gender: "
+            label-for="input-4"
+          >
+            <b-form-select id="input-4" v-model="form.gender" :options="genders" required></b-form-select>
+          </b-form-group>
+
+          <b-form-group
+            class="d-block text-left"
+            id="input-group-5"
+            label="State: "
+            label-for="input-5"
+          >
+            <b-form-input
+              id="input-5"
+              v-model="form.city"
+              type="text"
+              required
+              placeholder="Enter your state"
+            ></b-form-input>
+          </b-form-group>
+
           <b-button class="mr-2" type="submit" variant="primary">Submit</b-button>
           <b-button type="reset" variant="danger">Reset</b-button>
         </b-form>
@@ -62,7 +124,6 @@
 
 
 <script>
-
 import { db } from "@/main";
 export default {
   name: "Login",
@@ -73,15 +134,19 @@ export default {
         username: "",
         password: ""
       },
+      genders: ["Male", "Female"],
       form: {
         username: "",
-        password: ""
+        password: "",
+        birth: "",
+        gender: "",
+        city: ""
       },
       show: true,
       isSubmittable: true,
       asd: true,
-      headerBgVariant: 'dark',
-      headerTextVariant: 'light',
+      headerBgVariant: "dark",
+      headerTextVariant: "light"
     };
   },
   methods: {
@@ -118,11 +183,7 @@ export default {
       let snapshot = await db.collection("login").get();
       let available = true;
       snapshot.forEach(doc => {
-        if (
-          doc.data().username === this.form.username ||
-          (doc.data().username === this.form.username &&
-            doc.data().password === this.input.password)
-        ) {
+        if (doc.data().username === this.form.username) {
           available = false;
           this.isSubmittable = false;
         }
@@ -131,10 +192,16 @@ export default {
         await db.collection("login").add({
           username: this.form.username,
           password: this.form.password,
+          birth: this.form.birth,
+          city: this.form.city,
+          gender: this.form.gender,
           auth: 2
         });
         this.form.username = "";
         this.form.password = "";
+        this.form.birth = "";
+        this.form.city = "";
+        this.form.gender = "";
 
         this.$bvToast.toast(`Successful registration!`, {
           title: `Register`,
@@ -157,6 +224,9 @@ export default {
     onReset() {
       this.form.username = "";
       this.form.password = "";
+      this.form.birth = "";
+      this.form.city = "";
+      this.form.gender = "";
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
@@ -166,6 +236,9 @@ export default {
       this.$refs["modal"].show();
       this.form.username = "";
       this.form.password = "";
+      this.form.birth = "";
+      this.form.city = "";
+      this.form.gender = "";
     },
     hideModal() {
       this.$refs["modal"].hide();

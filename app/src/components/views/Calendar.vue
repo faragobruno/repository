@@ -207,7 +207,8 @@ export default {
           start: this.start,
           end: this.end,
           color: this.color,
-          isAllowed: false
+          isAllowed: false,
+          username: this.$parent.user
         });
         this.getEvents();
         this.name = "";
