@@ -8,11 +8,18 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faArchive,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt,faUserCircle,faEdit,faAlignLeft, faEye, faFileExcel,} from '@fortawesome/free-solid-svg-icons'
+import { faArchive,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt,faUserCircle,faEdit,faAlignLeft, faEye, faFileExcel, faSignOutAlt,} from '@fortawesome/free-solid-svg-icons'
 import excel from 'vue-excel-export'
+import { dom } from '@fortawesome/fontawesome-svg-core'
+
+dom.watch()
+
+import VueSidebarMenu from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+Vue.use(VueSidebarMenu)
  
 Vue.use(excel)
-library.add(faArchive,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt,faUserCircle,faEdit ,faEye,faFileExcel, faAlignLeft)
+library.add(faArchive,faSignOutAlt,faUser,faSpinner,faHome,faPen,faCalendarAlt,faDollarSign,faChartBar,faKey,faTrashAlt,faUserCircle,faEdit ,faEye,faFileExcel, faAlignLeft)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
