@@ -1,15 +1,42 @@
 <template>
   <div id="app">
-    <div v-if="this.$route.path !== '/login'">
+    <div>
+      <div v-if="this.$route.path !== '/login'">
       <Header />
-      
-      <sidebar-menu :menu="menu" >
-        <span slot="toggle-icon"><font-awesome-icon icon="home" /></span>
-      </sidebar-menu>
-    </div>
-    <b-container>
+        <nav v-on:click.prevent>
+          <router-link to="/home">
+            <font-awesome-icon icon="home" /> Home
+          </router-link>
+          <router-link v-if="tabAuth != 2" to="/datas">
+            <font-awesome-icon icon="archive" /> Datas
+          </router-link>
+          <router-link v-if="tabAuth != 2" to="/requests" >
+            <font-awesome-icon icon="pen" /> Bookings
+          </router-link>
+          <router-link to="/calendar">
+            <font-awesome-icon icon="calendar-alt" /> Calendar
+          </router-link>
+          <router-link to="/creditdatas">
+            <font-awesome-icon icon="dollar-sign" /> Credit
+          </router-link>
+          <router-link v-if="tabAuth != 2" to="/analyse" >
+            <font-awesome-icon icon="chart-bar" /> Analytics
+          </router-link>
+          <router-link v-if="tabAuth != 2" to="/users">
+            <font-awesome-icon icon="user-circle" /> Users
+          </router-link>
+          <router-link to="/profile">
+            <font-awesome-icon icon="user" /> Profile
+          </router-link>
+          <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>
+            <b-button variant="danger" size="sm">Logout</b-button>
+          </router-link>
+        </nav>
+      </div>
+      <b-container>
       <router-view @authenticated="setAuthenticated" />
     </b-container>
+    </div>
   </div>
 </template>
 
@@ -21,70 +48,12 @@ export default {
   components: {
     Header
   },
-  props:{
-    width: {
-      type: String,
-      default: '200px'
-    }
-  },
   data() {
     return {
       authenticated: false,
       tabAuth: "",
       user: "",
-      pass: "",
-      menu: [
-        {
-          header: true,
-          title: "Main Navigation",
-          hiddenOnCollapse: true
-        },
-        {
-          href: "/home",
-          title: "Home",
-          icon: "fa fa-home"
-        },
-        {
-          href: "/datas",
-          title: "Datas",
-          icon: "fa fa-archive"
-        },
-        {
-          href: "/requests",
-          title: "Request",
-          icon: "fa fa-pen"
-        },
-        {
-          href: "/calendar",
-          title: "Calendar",
-          icon: "fa fa-calendar-alt"
-        },
-        {
-          href: "/creditdatas",
-          title: "Credit",
-          icon: "fa fa-dollar-sign"
-        },
-        {
-          href: "/analyse",
-          title: "Analyse",
-          icon: "fa fa-chart-bar"
-        },
-        {
-          href: "/users",
-          title: "Users",
-          icon: "fa fa-user-circle"
-        },
-        {
-          href: "/profile",
-          title: "Profile",
-          icon: "fa fa-user"
-        },
-        {
-          href: "/login",
-          title: "Logout",
-          icon: "fa fa-sign-out-alt"
-        }
-      ]
+      pass: ""
     };
   },
   mounted() {
@@ -110,32 +79,110 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 100px;
-}
-.nav-item-es {
-  text-align: center;
-}
-#nav {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  margin: auto;
-  width: 200px;
-  height: 700px;
-  justify-self: left;
-  text-align: left;
   margin-top: 30px;
 }
-#nav a {
-  font-weight: bold;
-  color: white;
-  font-size: 0.9em;
-  text-align: right;
-  width: 100px;
+* {
+  margin: 0;
+  padding: 0;
 }
-#nav a.router-link-exact-active {
-  color: #42b983;
+
+body {
+  font: 15px/1.3 "Open Sans", sans-serif;
+  color: #5e5b64;
+  text-align: center;
 }
-#nav a :hover {
-  background: darkslategrey;
+
+
+a:visited {
   text-decoration: none;
+  background-color: #555;
+  color: white;
+}
+
+a:hover {
+  text-decoration: none;
+  background-color: #555;
+  color: white;
+}
+
+a:focus {
+  text-decoration: none;
+  background-color: rgb(104, 98, 98);
+  color: white;
+}
+
+section,
+footer,
+header,
+aside,
+nav {
+  display: block;
+}
+
+/*-------------------------
+    The menu
+--------------------------*/
+
+nav {
+  display: inline-block;
+  margin: 0px auto 0px;
+  background-color: gray;
+  box-shadow: 0 1px 1px #ccc;
+  border-radius: 2px;
+  width: 1000px;
+}
+
+nav a {
+  display: inline-block;
+  padding: 10px 10px;
+  color: #fff !important;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none !important;
+  line-height: 1;
+  text-transform: uppercase;
+  background-color: transparent;
+
+  -webkit-transition: background-color 0.25s;
+  -moz-transition: background-color 0.25s;
+  transition: background-color 0.25s;
+}
+
+nav a:first-child {
+  border-radius: 2px 0 0 2px;
+}
+
+nav a:last-child {
+  border-radius: 0 2px 2px 0;
+}
+
+nav.home .home,
+nav.datas .datas,
+nav.requests .requests,
+nav.bookings .bookings,
+nav.calendar .calendar,
+nav.credit .credit,
+nav.analytics .analytics,
+nav.users .users,
+nav.profile .profile {
+  background-color: #e35885;
+}
+
+p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+p b {
+  color: #ffffff;
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #c4d7e0;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+.resource {
+  margin: 20px 0;
 }
 </style>

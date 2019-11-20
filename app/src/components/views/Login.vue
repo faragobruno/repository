@@ -1,37 +1,30 @@
 <template>
   <div id="login">
     <h1>Login</h1>
-    <b-navbar type="light" variant="light">
-      <b-nav-form class="d-flex justify-content-center">
-        <a>
-          <font-awesome-icon icon="user" />
-        </a>
-        <b-input-group class="ml-3">
-          <b-form-input
-            class="username"
-            type="text"
-            name="username"
-            v-model="input.username"
-            placeholder="Username"
-          ></b-form-input>
-        </b-input-group>
-        <b-input-group class="mt-2">
-          <a>
-            <font-awesome-icon class="mt-2" icon="key" />
-          </a>
-          <b-form-input
-            class="password ml-3"
-            type="password"
-            name="password"
-            v-model="input.password"
-            placeholder="Password"
-          ></b-form-input>
-        </b-input-group>
-      </b-nav-form>
-    </b-navbar>
-    <b-button class="log-btn" variant="success" v-on:click="login('b-toaster-top-center')">Login</b-button>
-    <b-button class="reg-btn" variant="primary" @click="showModal">Register</b-button>
-
+    <b-container>
+      <b-input-group >
+        <font-awesome-icon class="mt-2 ml-1" icon="user"/>
+        <b-form-input
+          class="username ml-3"
+          type="text"
+          name="username"
+          v-model="input.username"
+          placeholder="Username"
+        ></b-form-input>
+      </b-input-group>
+      <b-input-group class="mt-2">
+        <font-awesome-icon class="mt-2" icon="key"/>
+        <b-form-input
+          class="password ml-3"
+          type="password"
+          name="password"
+          v-model="input.password"
+          placeholder="Password"
+        ></b-form-input>
+      </b-input-group>
+      <b-button class="log-btn" variant="success" v-on:click="login('b-toaster-top-center')">Login</b-button>
+      <b-button class="reg-btn" variant="primary" @click="showModal">Register</b-button>
+    </b-container>
     <b-modal
       :header-bg-variant="headerBgVariant"
       :header-text-variant="headerTextVariant"
@@ -255,6 +248,8 @@ export default {
   margin: auto;
   margin-top: 100px;
   padding: 20px;
+  text-align: center;
+  align-content: center;
 }
 .reg-btn {
   margin-top: 10px;
@@ -267,8 +262,10 @@ export default {
 }
 .username {
   border: 1px solid #cccccc;
+  margin-right: 10px;
 }
 .password {
   border: 1px solid #cccccc;
+  margin-right: 10px;
 }
 </style>

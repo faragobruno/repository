@@ -33,10 +33,9 @@
         </template>
       </template>
     </b-table>
-    <b-button variant="success" class="w-50">
-    <i><font-awesome-icon icon="file-excel" size="lg"/></i>
-    <export-excel :data="events" worksheet="Bookings" name="Bookings.xls"></export-excel>
-    </b-button>
+    <b-button variant="success" class="w-40">
+      <font-awesome-icon icon="file-excel" size="lg"/><export-excel :data="events" worksheet="Bookings" name="Bookings.xls"></export-excel>
+   </b-button>
     <b-modal
       :header-bg-variant="headerBgVariant"
       :header-text-variant="headerTextVariant"
